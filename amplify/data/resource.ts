@@ -3,10 +3,10 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 const schema = a.schema({
   Recipe: a
     .model({
-      recipeId: a.id().required(),
+      recipeId: a.id(),
       thumbnail: a.string().required(),
       title: a.string().required(),
-      body: a.string().required(),
+      steps: a.string().required(),
       likes: a.hasMany("Like", "recipeId"),
       comments: a.hasMany("Comment", "recipeId"),
       owner: a.string().authorization((allow) => allow.owner()),
@@ -15,7 +15,7 @@ const schema = a.schema({
   Like: a
     .model({
       likeId: a.id().required(), // Add a unique identifier for Like model
-      count: a.integer(),
+      count: a.integer().default(0),
       recipeId: a.id().required(), // Add recipeId field to link to Recipe
       recipe: a.belongsTo("Recipe", "recipeId"),
       owner: a.string().authorization((allow) => allow.owner()),

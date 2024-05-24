@@ -8,23 +8,26 @@ import output from "../amplify_outputs.json";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.tsx";
+import ShareRecipeForm from "./components/ShareRecipeForm.tsx";
 import { Authenticator } from "@aws-amplify/ui-react";
+import Navbar from "./components/Navbar.tsx";
 
 Amplify.configure(output);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Authenticator>
-              {({ user, signOut }) => <Home user={user} signOut={signOut} />}
-            </Authenticator>
-          }
-        />
-      </Routes>
+      <Authenticator className="flex justify-center items-center min-h-screen">
+        {({ user, signOut }) => (
+          <>
+            <Navbar user={user} signOut={signOut} />
+            <Routes>
+              <Route path="/" element={<Home user={user} />} />
+              <Route path="/share" element={<ShareRecipeForm user={user} />} />
+            </Routes>
+          </>
+        )}
+      </Authenticator>
     </BrowserRouter>
   </React.StrictMode>
 );
