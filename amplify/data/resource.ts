@@ -3,7 +3,6 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 const schema = a.schema({
   Recipe: a
     .model({
-      recipeId: a.id(),
       thumbnail: a.string().required(),
       title: a.string().required(),
       steps: a.string().required(),
@@ -14,23 +13,19 @@ const schema = a.schema({
     .authorization((allow) => [allow.owner()]),
   Like: a
     .model({
-      likeId: a.id().required(), // Add a unique identifier for Like model
       count: a.integer().default(0),
-      recipeId: a.id().required(), // Add recipeId field to link to Recipe
+      recipeId: a.id(), // Add recipeId field to link to Recipe
       recipe: a.belongsTo("Recipe", "recipeId"),
       owner: a.string().authorization((allow) => allow.owner()),
     })
-    .identifier(["likeId"])
     .authorization((allow) => [allow.owner()]),
   Comment: a
     .model({
-      commentId: a.id().required(), // Add a unique identifier for Comment model
       content: a.string().required(),
-      recipeId: a.id().required(), // Add recipeId field to link to Recipe
+      recipeId: a.id(), // Add recipeId field to link to Recipe
       recipe: a.belongsTo("Recipe", "recipeId"),
       owner: a.string().authorization((allow) => allow.owner()),
     })
-    .identifier(["commentId"])
     .authorization((allow) => [allow.owner()]),
 });
 
