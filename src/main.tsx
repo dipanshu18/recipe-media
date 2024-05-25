@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Navbar user={user} signOut={signOut} />
             <Routes>
               <Route path="/" element={<Home user={user} />} />
-              <Route path="/share" element={<ShareRecipeForm user={user} />} />
+              <Route path="/share" element={<ShareRecipeForm />} />
             </Routes>
           </>
         )}
